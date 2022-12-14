@@ -1,0 +1,223 @@
+Loading channels: ...working... done
+biobb_structure_checking 0.0.1 py_0
+-----------------------------------
+file name   : biobb_structure_checking-0.0.1-py_0.tar.bz2
+name        : biobb_structure_checking
+version     : 0.0.1
+build       : py_0
+build number: 0
+size        : 22 KB
+license     : Apache Software License
+subdir      : noarch
+url         : https://conda.anaconda.org/bioconda/noarch/biobb_structure_checking-0.0.1-py_0.tar.bz2
+md5         : 0377afb9e3d7c65b9f3e796c6bf8e8a0
+timestamp   : 2019-04-08 12:55:19 UTC
+dependencies: 
+  - biobb_structure_manager 0.0.6
+  - python 3.6.*
+
+
+biobb_structure_checking 1.0.5 py_0
+-----------------------------------
+file name   : biobb_structure_checking-1.0.5-py_0.tar.bz2
+name        : biobb_structure_checking
+version     : 1.0.5
+build       : py_0
+build number: 0
+size        : 22 KB
+license     : Apache Software License
+subdir      : noarch
+url         : https://conda.anaconda.org/bioconda/noarch/biobb_structure_checking-1.0.5-py_0.tar.bz2
+md5         : 94cb0a4220da94d412edc251346a8010
+timestamp   : 2019-04-08 14:57:12 UTC
+dependencies: 
+  - biobb_structure_manager 0.0.6
+  - python 3.6.*
+
+
+biobb_structure_checking 1.0.6 py_0
+-----------------------------------
+file name   : biobb_structure_checking-1.0.6-py_0.tar.bz2
+name        : biobb_structure_checking
+version     : 1.0.6
+build       : py_0
+build number: 0
+size        : 35 KB
+license     : Apache Software License
+subdir      : noarch
+url         : https://conda.anaconda.org/bioconda/noarch/biobb_structure_checking-1.0.6-py_0.tar.bz2
+md5         : c494a0db8e4482c76978feebec5ffadf
+timestamp   : 2019-04-09 08:37:57 UTC
+dependencies: 
+  - biobb_structure_manager 0.0.6
+  - python 3.6.*
+
+
+biobb_structure_checking 1.0.7 py_0
+-----------------------------------
+file name   : biobb_structure_checking-1.0.7-py_0.tar.bz2
+name        : biobb_structure_checking
+version     : 1.0.7
+build       : py_0
+build number: 0
+size        : 35 KB
+license     : Apache Software License
+subdir      : noarch
+url         : https://conda.anaconda.org/bioconda/noarch/biobb_structure_checking-1.0.7-py_0.tar.bz2
+md5         : 60f2d7f71866c78c6fdb24002190def7
+timestamp   : 2020-02-13 16:30:54 UTC
+dependencies: 
+  - biobb_structure_manager 1.0.0
+  - python 3.6.*
+
+
+biobb_structure_checking 3.0.0 py_0
+-----------------------------------
+file name   : biobb_structure_checking-3.0.0-py_0.tar.bz2
+name        : biobb_structure_checking
+version     : 3.0.0
+build       : py_0
+build number: 0
+size        : 35 KB
+license     : Apache Software License
+subdir      : noarch
+url         : https://conda.anaconda.org/bioconda/noarch/biobb_structure_checking-3.0.0-py_0.tar.bz2
+md5         : 07c0006b025532b3584c36fba78235d7
+timestamp   : 2020-05-18 19:23:27 UTC
+dependencies: 
+  - biobb_structure_manager 1.0.0
+  - python 3.6.*
+
+
+biobb_structure_checking 3.0.1 py_0
+-----------------------------------
+file name   : biobb_structure_checking-3.0.1-py_0.tar.bz2
+name        : biobb_structure_checking
+version     : 3.0.1
+build       : py_0
+build number: 0
+size        : 35 KB
+license     : Apache Software License
+subdir      : noarch
+url         : https://conda.anaconda.org/bioconda/noarch/biobb_structure_checking-3.0.1-py_0.tar.bz2
+md5         : 842f8da28db0b087f230ff980ce472da
+timestamp   : 2020-05-20 17:21:29 UTC
+dependencies: 
+  - biobb_structure_manager 3.0.1
+  - python 3.7.*
+
+
+biobb_structure_checking 3.0.2 py_0
+-----------------------------------
+file name   : biobb_structure_checking-3.0.2-py_0.tar.bz2
+name        : biobb_structure_checking
+version     : 3.0.2
+build       : py_0
+build number: 0
+size        : 35 KB
+license     : Apache Software License
+subdir      : noarch
+url         : https://conda.anaconda.org/bioconda/noarch/biobb_structure_checking-3.0.2-py_0.tar.bz2
+md5         : ac8c9fc25e1098103b3461b8313e3fcb
+timestamp   : 2020-05-21 13:30:42 UTC
+dependencies: 
+  - biobb_structure_manager 3.0.2
+  - psutil
+  - python 3.7.*
+
+
+biobb_structure_checking 3.5.0 py_0
+-----------------------------------
+file name   : biobb_structure_checking-3.5.0-py_0.tar.bz2
+name        : biobb_structure_checking
+version     : 3.5.0
+build       : py_0
+build number: 0
+size        : 64 KB
+license     : Apache Software License
+subdir      : noarch
+url         : https://conda.anaconda.org/bioconda/noarch/biobb_structure_checking-3.5.0-py_0.tar.bz2
+md5         : 79efe9dcf5ecfe51abda8de9c83df36d
+timestamp   : 2020-12-22 15:36:44 UTC
+dependencies: 
+  - biopython 1.78
+  - psutil
+  - python 3.7.*
+
+
+biobb_structure_checking 3.5.3 py_0
+-----------------------------------
+file name   : biobb_structure_checking-3.5.3-py_0.tar.bz2
+name        : biobb_structure_checking
+version     : 3.5.3
+build       : py_0
+build number: 0
+size        : 64 KB
+license     : Apache Software License
+subdir      : noarch
+url         : https://conda.anaconda.org/bioconda/noarch/biobb_structure_checking-3.5.3-py_0.tar.bz2
+md5         : f5294b5dd8bd092b7e852c018815ecdc
+timestamp   : 2020-12-22 17:15:56 UTC
+dependencies: 
+  - biopython 1.78
+  - psutil
+  - python 3.7.*
+
+
+biobb_structure_checking 3.7.1 py_0
+-----------------------------------
+file name   : biobb_structure_checking-3.7.1-py_0.tar.bz2
+name        : biobb_structure_checking
+version     : 3.7.1
+build       : py_0
+build number: 0
+size        : 64 KB
+license     : Apache Software License
+subdir      : noarch
+url         : https://conda.anaconda.org/bioconda/noarch/biobb_structure_checking-3.7.1-py_0.tar.bz2
+md5         : b45c74a2e6fa7e75bba3dc52aba698f8
+timestamp   : 2020-12-23 14:15:36 UTC
+dependencies: 
+  - biopython
+  - psutil
+  - python >=3.6
+
+
+biobb_structure_checking 3.7.2 py_0
+-----------------------------------
+file name   : biobb_structure_checking-3.7.2-py_0.tar.bz2
+name        : biobb_structure_checking
+version     : 3.7.2
+build       : py_0
+build number: 0
+size        : 64 KB
+license     : Apache Software License
+subdir      : noarch
+url         : https://conda.anaconda.org/bioconda/noarch/biobb_structure_checking-3.7.2-py_0.tar.bz2
+md5         : 9c0a79cd9412c5375de710a2a0fa08f7
+timestamp   : 2020-12-29 09:13:29 UTC
+dependencies: 
+  - biopython
+  - psutil
+  - python >=3.6
+
+
+biobb_structure_checking 3.7.3 py_0
+-----------------------------------
+file name   : biobb_structure_checking-3.7.3-py_0.tar.bz2
+name        : biobb_structure_checking
+version     : 3.7.3
+build       : py_0
+build number: 0
+size        : 65 KB
+license     : Apache Software License
+subdir      : noarch
+url         : https://conda.anaconda.org/bioconda/noarch/biobb_structure_checking-3.7.3-py_0.tar.bz2
+md5         : fb9470744570ce422a43bcf7d31cdc4e
+timestamp   : 2021-01-13 13:11:50 UTC
+dependencies: 
+  - biopython
+  - psutil
+  - python >=3.6
+
+

@@ -1,0 +1,7 @@
+name: bioconda-env
+channels:
+  - conda-forge
+  - free
+  - bioconda
+dependencies:
+  - bioconda-utils

@@ -1,0 +1,1 @@
+docker run --add-host=mongoservice:172.17.0.1 import-bioconda

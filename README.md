@@ -1,0 +1,29 @@
+# Bioconda recipes importer 
+
+Parameters in `.env`. 
+
+Requirements: 
+
+- Python:
+```
+bidict==0.22.0
+matplotlib==3.5.3
+munch==2.5.0
+pymongo==4.3.2
+requests==2.22.0
+selenium==3.141.0
+simplejson==3.17.6
+webdriver_manager==3.8.4
+``` 
+
+- Conda: 
+
+```
+bioconda-utils
+``` 
+
+Usage:
+
+```
+python3 main.py
+```
