@@ -21,6 +21,7 @@ def push_entry(tool:dict, collection:'pymongo.collection.Collection', log:dict):
         updateResult = collection.update_many({'@id':tool['@id']}, { '$set': tool }, upsert=True)
     except Exception as e:
         log['errors'].append({'file':tool,'error':e})
+        print(f"❌ An exception occurred while processing {tool['name']}: {e}")
         return(log)
     else:
         log['n_ok'] += 1
@@ -54,8 +55,7 @@ def save_entry(tool, output_file, log):
 
     except Exception as e:
         log['errors'].append({'file':tool['name'],'error':e})
-        raise
-        # return(log)
+        return(log)
 
     else:
         log['n_ok'] += 1

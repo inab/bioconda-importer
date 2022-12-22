@@ -1,1 +1,2 @@
-docker run --add-host=mongoservice:172.17.0.1 import-bioconda
+export DOCKER_DEFAULT_PLATFORM=linux/amd64
+docker run import-bioconda

@@ -5,3 +5,8 @@ channels:
   - bioconda
 dependencies:
   - bioconda-utils
+  - pymongo
+  - ca-certificates
+  - certifi
+  - openssl
+  - python-dotenv

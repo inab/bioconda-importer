@@ -4,35 +4,73 @@ Parameters in `.env`.
 
 ## Requirements: 
 
-- Python:
-```
-bidict==0.22.0
-matplotlib==3.5.3
-munch==2.5.0
-pymongo==4.3.2
-requests==2.22.0
-selenium==3.141.0
-simplejson==3.17.6
-webdriver_manager==3.8.4
-``` 
+- Mamba
+- Python =< 3.7
+- Conda packages: 
+    ```
+    bioconda-utils
+    ``` 
+- Python packages:
+    ```
+    pymongo
+    ca-certificates
+    certifi
+    openssl
+    python-dotenv
+    ``` 
 
-- Conda: 
-
-```
-bioconda-utils
-``` 
+>:bulb: 
+>
+> conda can be used instead of mamba, but `bioconda-utils` is a very big package and conda can runout of memory when trying to install it. 
+>
+> Python 3.7 is not supported by Apple M1 chips.
 
 ## Usage:
 
+### Create the environment and install dependencies 
+```sh
+mamba create -y -n bioconda-env 
+mamba activate bioconda-env 
+conda config --env --set subdir osx-64 # to emulate osx-64 architecture   
+mamba install -c bioconda -c conda-forge -c anaconda -c free bioconda-utils 
+mamba install -c bioconda -c conda-forge -c anaconda -c free --file reuirements.txt
 ```
+
+### Execute the importer
+
+```sh
 python3 main.py
+``` 
+
+## Docker container 
+
+### Dockerfile 
+Use: 
+```dockerfile
+# To activate the env
+SHELL ["conda", "run", "-n", "bioconda-dev", "/bin/bash", "-c"]
+```
+```dockerfile
+# To execute the importer
+ENTRYPOINT ["conda", "run", "--no-capture-output", "-n", "bioconda-dev", "python3", "main.py"]
 ```
 
-## Docker container
+### Building and running
 
+To use `linux/amd64` architecture to run and build the container: 
+
+```sh
+export DOCKER_DEFAULT_PLATFORM=linux/amd64 
 ```
-docker build .
-docker run --add-host=mongoservice:172.17.0.1 import-bioconda
+
+To build the image and run a container:
+```sh
+docker build -t bioconda-importer .
+docker run import-bioconda
 ```
-Gateway may change, check with command `docker network inspect`. 
-PORT in `.env` must be `mongoservice` to connect to the local database.
+
+### Connecting to services in host
+
+Use `host.docker.internal` instead of `localhost` in the container to reach local services.  
+For instance, to connect to a local MongoDB, use the string `host.docker.internal:27017`.
+

@@ -1,5 +1,6 @@
 import os
 import dotenv
+import time 
 
 from glob import glob
 
@@ -234,7 +235,6 @@ def process_recipes():
                 'errors': []}
         for tool in tool_names_subs_raw:
             # 3. Process metadata
-            print(tool)
             inst_dicts, log = retrieve_packages_metadata(tool, recipes_path, log)
             for inst_dict in inst_dicts:
 
@@ -245,6 +245,7 @@ def process_recipes():
 
                     except Exception as e:
                         log['errors'].append({'file':tool,'error':e})
+                        print(f"❌ An exception occurred while processing {tool['name']}: {e}")
         
                     else:
                         log['n_ok'] += 1
@@ -252,7 +253,6 @@ def process_recipes():
                     log = save_entry(inst_dict, OUTPUT_PATH, log)
                     
             print_progress(log)
-
     
         print_final_report(log)
     
@@ -261,6 +261,7 @@ def process_recipes():
 
 if __name__=='__main__':
     # Extract and push metadata
+    print('Extracting metadata from recipes')
     process_recipes()
 
 
