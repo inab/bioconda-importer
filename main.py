@@ -218,7 +218,7 @@ def process_recipes():
         OUTPUT_PATH = os.getenv('OUTPUT_PATH', './data/bioconda.json')
 
     # 2. List tool names in the directory
-    recipes_path = os.getenv('RECIPES_PATH')        
+    recipes_path = os.getenv('RECIPES_PATH', './bioconda-recipes/recipes')        
     if not recipes_path:
         print('RECIPES_PATH environment variable not set. Exiting importation.')
     else:
@@ -240,15 +240,8 @@ def process_recipes():
 
                 # 4. Push metadata to DB/file
                 if STORAGE_MODE=='db':
-                    try:
-                        log = push_entry(inst_dict, alambique, log)
+                    log = push_entry(inst_dict, alambique, log)
 
-                    except Exception as e:
-                        log['errors'].append({'file':tool,'error':e})
-                        print(f"❌ An exception occurred while processing {tool['name']}: {e}")
-        
-                    else:
-                        log['n_ok'] += 1
                 else:
                     log = save_entry(inst_dict, OUTPUT_PATH, log)
                     
