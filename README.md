@@ -24,6 +24,7 @@ If the ENV variables are stored in an `.env` file:
 >```sh
 >export DOCKER_DEFAULT_PLATFORM=linux/amd64 
 >```
+> Necessary to run this container in a MacBook with M1 chip.
 
 
 > :bulb: **Connecting to services in host** 
