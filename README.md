@@ -10,13 +10,13 @@ The easiest way to run this importer is by using a docker image.
 
     ```sh
     docker login registry.gitlab.bsc.es
-    docker pull registry.gitlab.bsc.es/inb/elixir/software-observatory/repositories-importer
+    docker pull registry.gitlab.bsc.es/inb/elixir/software-observatory/bioconda-importer
     ```
 
 2. Run the container. 
 If the ENV variables are stored in an `.env` file: 
     ```sh
-    docker run --name [container-name] --env-file registry.gitlab.bsc.es/inb/elixir/software-observatory/repositories-importer
+    docker run --env-file .env registry.gitlab.bsc.es/inb/elixir/software-observatory/bioconda-importer
     ```
 
 > :bulb: **Using `linux/amd64` architecture to run (and build) the container** 
