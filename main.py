@@ -1,7 +1,10 @@
 import os
 import dotenv
 import time 
+import logging
+import argparse
 
+from dotenv import load_dotenv
 from glob import glob
 
 import ruamel.yaml
@@ -207,6 +210,23 @@ def check_tool_host_target(tool_requirements, type_):
 
 
 def process_recipes():
+    # 0.1 Set up logging
+    parser = argparse.ArgumentParser(
+        description="Importer of OpenEBench tools from OpenEBench Tool API"
+    )
+    parser.add_argument(
+        "--loglevel", "-l",
+        help=("Set the logging level"),
+        default="INFO",
+    )
+    args = parser.parse_args()
+    numeric_level = getattr(logging, args.loglevel.upper())
+
+    logging.basicConfig(level=numeric_level, format='%(asctime)s - %(levelname)s - %(message)s')
+
+    # 0.2 Load .env
+    load_dotenv()
+
 
     # 1. connect to DB/ get output file
     STORAGE_MODE = os.getenv('STORAGE_MODE', 'db')
@@ -220,24 +240,31 @@ def process_recipes():
     # 2. List tool names in the directory
     recipes_path = os.getenv('RECIPES_PATH', './bioconda-recipes/recipes')        
     if not recipes_path:
-        print('RECIPES_PATH environment variable not set. Exiting importation.')
+        logging.info('RECIPES_PATH environment variable not set. Exiting importation.')
     else:
         subdirectories = glob("%s/*/"%(recipes_path))
         tool_names_subs_raw = get_tool_names(subdirectories)
         
-        print('List of names obtained')
-        print('Number of tools: %s'%(len(tool_names_subs_raw)))
+        logging.info('List of names obtained')
+        logging.info('Number of tools: %s'%(len(tool_names_subs_raw)))
     
         # For each tool, extract metadata and push to DB/file
-        print('Processing metadata')
+        logging.info('Processing metadata')
         log = {'names':[],
                 'n_ok':0,
-                'errors': []}
+                'errors': []
+                }
+
+        n=0
+        landmarks = {str(int((len(tool_names_subs_raw)/10)*i)): f"{i*10}%" for i in range(0,11)} # 10% landmarks for logging
         for tool in tool_names_subs_raw:
+            if str(n) in landmarks.keys():
+                    logging.info(f'{n}/{len(tool_names_subs_raw)} ({landmarks[str(n)]}) instances pushed to database\r')
+            n+=1
             # 3. Process metadata
             inst_dicts, log = retrieve_packages_metadata(tool, recipes_path, log)
             for inst_dict in inst_dicts:
-
+                
                 # 4. Push metadata to DB/file
                 if STORAGE_MODE=='db':
                     log = push_entry(inst_dict, alambique, log)

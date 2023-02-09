@@ -1,5 +1,6 @@
 import json 
 import os
+import logging
 from bs4 import BeautifulSoup
 
 
@@ -79,17 +80,17 @@ def connect_db():
 
 def print_progress(log):
     # Keeping track of progress
-    print(f"{len(log['names'])} recipes processes --- {log['n_ok']} parsed and loaded sucessfully --- {len(log['errors'])} raised an exception", end="\r", flush=True)
+    logging.info(f"{len(log['names'])} recipes processes --- {log['n_ok']} parsed and loaded sucessfully --- {len(log['errors'])} raised an exception", end="\r", flush=True)
     return
 
 def print_final_report(log):
-    print(f"\n----- Importation finished -----\nNumber of packages in Bioconda {log['n_ok']}")
-    print('Exceptions:')
+    logging.info(f"\n----- Importation finished -----\nNumber of packages in Bioconda {log['n_ok']}")
+    logging.info('Exceptions:')
     if len(log['errors']) != 0:
         for e in log['errors']:
-            print(f"File {e['file']} raised the exception {e['error']}")  
+            logging.info(f"File {e['file']} raised the exception {e['error']}")  
     else:
-        print('--- No exceptions were raised ---')
+        logging.info('--- No exceptions were raised ---')
     
     return
 
