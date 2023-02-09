@@ -80,7 +80,7 @@ def connect_db():
 
 def print_progress(log):
     # Keeping track of progress
-    logging.info(f"{len(log['names'])} recipes processes --- {log['n_ok']} parsed and loaded sucessfully --- {len(log['errors'])} raised an exception", end="\r", flush=True)
+    logging.info(f"{len(log['names'])} recipes processes --- {log['n_ok']} parsed and loaded sucessfully --- {len(log['errors'])} raised an exception")
     return
 
 def print_final_report(log):
