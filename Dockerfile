@@ -1,6 +1,11 @@
 FROM condaforge/mambaforge:latest
 COPY . ./
 
+RUN apt-get update \        
+     apt-get install -y git
+
+RUN git clone https://github.com/bioconda/bioconda-recipes.git
+
 RUN mamba create -y -n bioconda-dev 
 
 ARG MAMBA_DOCKERFILE_ACTIVATE=1

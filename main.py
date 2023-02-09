@@ -8,7 +8,6 @@ from dotenv import load_dotenv
 from glob import glob
 
 import ruamel.yaml
-
 import bioconda_utils.recipe as brecipe # this module is installed in env 'bioconda'
 
 from utils import push_entry, save_entry, connect_db, print_final_report, print_progress
@@ -212,7 +211,7 @@ def check_tool_host_target(tool_requirements, type_):
 def process_recipes():
     # 0.1 Set up logging
     parser = argparse.ArgumentParser(
-        description="Importer of OpenEBench tools from OpenEBench Tool API"
+        description="Importer of Bioconda recipes"
     )
     parser.add_argument(
         "--loglevel", "-l",
@@ -259,7 +258,7 @@ def process_recipes():
         landmarks = {str(int((len(tool_names_subs_raw)/10)*i)): f"{i*10}%" for i in range(0,11)} # 10% landmarks for logging
         for tool in tool_names_subs_raw:
             if str(n) in landmarks.keys():
-                    logging.info(f'{n}/{len(tool_names_subs_raw)} ({landmarks[str(n)]}) instances pushed to database\r')
+                logging.info(f'{n}/{len(tool_names_subs_raw)} ({landmarks[str(n)]}) instances pushed to database\r')
             n+=1
             # 3. Process metadata
             inst_dicts, log = retrieve_packages_metadata(tool, recipes_path, log)
