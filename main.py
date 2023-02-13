@@ -218,10 +218,16 @@ def process_recipes():
         help=("Set the logging level"),
         default="INFO",
     )
+    parser.add_argument(
+        "--logs-dir", "-d",
+        help=("Set the logging directory"),
+        default="./logs",
+    )
     args = parser.parse_args()
     numeric_level = getattr(logging, args.loglevel.upper())
+    logs_dir = args.logs_dir
 
-    logging.basicConfig(level=numeric_level, format='%(asctime)s - %(levelname)s - %(message)s')
+    logging.basicConfig(level=numeric_level, format='%(asctime)s - %(levelname)s - %(message)s', filename=f'{logs_dir}/summary.log', filemode='w')
 
     # 0.2 Load .env
     load_dotenv()
