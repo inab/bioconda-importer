@@ -22,10 +22,12 @@ def push_entry(tool:dict, collection:'pymongo.collection.Collection', log:dict):
         updateResult = collection.update_many({'@id':tool['@id']}, { '$set': tool }, upsert=True)
     except Exception as e:
         log['errors'].append({'file':tool,'error':e})
+        logging.warning(f"pushed_to_db - bioconda - ERROR")
         print(f"❌ An exception occurred while processing {tool['name']}: {e}")
         return(log)
     else:
         log['n_ok'] += 1
+        logging.info(f"pushed_to_db - bioconda - OK")
     finally:
         return(log)
 
