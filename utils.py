@@ -23,7 +23,7 @@ def push_entry(tool:dict, collection:'pymongo.collection.Collection', log:dict):
     except Exception as e:
         log['errors'].append({'file':tool,'error':e})
         logging.info(f"pushed_to_db - bioconda - ERROR")
-        print(f"❌ An exception occurred while processing {tool['name']}: {e}")
+        logging.warning(f"❌ An exception occurred while processing {tool['name']}: {e}")
         return(log)
     else:
         log['n_ok'] += 1
