@@ -265,7 +265,7 @@ def process_recipes():
         for tool in tool_names_subs_raw:
 
             # 3. Process metadata
-            inst_dicts, log = retrieve_packages_metadata(tool, recipes_path)
+            inst_dicts = retrieve_packages_metadata(tool, recipes_path)
             for inst_dict in inst_dicts:
                 
                 # 4. Push metadata to DB/file
