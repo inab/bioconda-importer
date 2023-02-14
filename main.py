@@ -253,6 +253,7 @@ def process_recipes():
         
     else:
         subdirectories = glob("%s/*/"%(recipes_path))
+        logging.debug(f'subdirectories: {subdirectories}')
         tool_names_subs_raw = get_tool_names(subdirectories)
         
         logging.info('List of names obtained')
