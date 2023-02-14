@@ -10,7 +10,7 @@ from glob import glob
 import ruamel.yaml
 import bioconda_utils.recipe as brecipe # this module is installed in env 'bioconda'
 
-from utils import push_entry, save_entry, connect_db, print_final_report, print_progress
+from utils import push_entry, save_entry, connect_db
 
 dotenv.load_dotenv()
 
