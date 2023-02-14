@@ -5,7 +5,7 @@ from bs4 import BeautifulSoup
 
 
 
-def push_entry(tool:dict, collection:'pymongo.collection.Collection', log:dict):
+def push_entry(tool:dict, collection:'pymongo.collection.Collection'):
     '''Push tool to collection.
 
     tool: dictionary. Must have at least an '@id' key.
@@ -15,24 +15,18 @@ def push_entry(tool:dict, collection:'pymongo.collection.Collection', log:dict):
     # date objects cause trouble and are prescindable
     if 'about' in tool.keys():
             tool['about'].pop('date', None)
-
-    log['names'].append(tool['name'])
     
     try:
         updateResult = collection.update_many({'@id':tool['@id']}, { '$set': tool }, upsert=True)
     except Exception as e:
-        log['errors'].append({'file':tool,'error':e})
-        logging.info(f"pushed_to_db - bioconda - ERROR")
-        logging.warning(f"❌ An exception occurred while processing {tool['name']}: {e}")
-        return(log)
+        logging.warning(f"error with {tool['name']} - pushing_to_db")
+        logging.warning(e)
     else:
-        log['n_ok'] += 1
-        logging.info(f"pushed_to_db - bioconda - OK")
+        logging.info(f"pushed_to_db_ok - {tool['name']}")
     finally:
-        return(log)
+        return
 
-
-def save_entry(tool, output_file, log):
+def save_entry(tool, output_file):
     '''Save tool to file.
 
     tool: dictionary. Must have at least an '@id' key.
@@ -49,7 +43,7 @@ def save_entry(tool, output_file, log):
                 json.dump([tool], f)
         else:
             with open(output_file, 'r+') as outfile:
-                print('Saving to file: ' + output_file)
+                logging.info('Saving to file: ' + output_file)
                 data = json.load(outfile)
                 data.append(tool)
                 # Sets file's current position at offset.
@@ -57,13 +51,14 @@ def save_entry(tool, output_file, log):
                 json.dump(data, outfile)
 
     except Exception as e:
-        log['errors'].append({'file':tool['name'],'error':e})
-        return(log)
+        logging.warning(f"error with {tool['name']} - saving_to_file")
+        logging.warning(e)
+        return
 
     else:
-        log['n_ok'] += 1
+        logging.info(f"pushed_to_db_ok - {tool['name']}")
     finally:
-        return(log)
+        return
 
 def connect_db():
     '''Connect to MongoDB and return the database and collection objects.
@@ -79,20 +74,4 @@ def connect_db():
     alambique = client[DB][ALAMBIQUE]
 
     return alambique
-
-def print_progress(log):
-    # Keeping track of progress
-    logging.info(f"{len(log['names'])} recipes processes --- {log['n_ok']} parsed and loaded sucessfully --- {len(log['errors'])} raised an exception")
-    return
-
-def print_final_report(log):
-    logging.info(f"\n----- Importation finished -----\nNumber of packages in Bioconda {log['n_ok']}")
-    logging.info('Exceptions:')
-    if len(log['errors']) != 0:
-        for e in log['errors']:
-            logging.info(f"File {e['file']} raised the exception {e['error']}")  
-    else:
-        logging.info('--- No exceptions were raised ---')
-    
-    return
 

@@ -22,8 +22,8 @@ def get_tool_names(subdirectories):
         tool_names_subs_raw.append(name)
     return(tool_names_subs_raw)
 
-def retrieve_packages_metadata(tool, recipes_path, log):
-    inst_dicts, log = extract_metadata(tool,recipes_path, log)
+def retrieve_packages_metadata(tool, recipes_path):
+    inst_dicts = extract_metadata(tool,recipes_path)
     
     if inst_dicts:
         for inst_dict in inst_dicts:
@@ -32,17 +32,19 @@ def retrieve_packages_metadata(tool, recipes_path, log):
                 inst_dict['@data_source'] = 'bioconda_recipes'
           
     else:
-        log['errors'].append({'file':tool,'error':'Empty inst_dict'}) 
+        logging.warning(f"Error with {tool} - parsing")
+        logging.warning('Empty inst_dict')
 
-    return(inst_dicts, log)
+    return(inst_dicts)
 
-def extract_metadata(package, recipes_path, log):
+def extract_metadata(package, recipes_path):
     insts = []
     try:
         recipe = brecipe.load_parallel_iter(recipes_path, package)
     except Exception as e:
-        log['errors'].append({'package':package,'error':e})
-        return(insts, log)
+        logging.warning(f"error with {package} - parsing")
+        logging.warning(e)
+        return(insts)
     else:
         for a in recipe:
             a.render
@@ -53,7 +55,8 @@ def extract_metadata(package, recipes_path, log):
             
             insts.append(a.meta)
         
-        return(insts, log)
+        return(insts)
+
 
 def build_id(tool):
     id_template = "https://openebench.bsc.es/monitor/tool/bioconda_recipes:{name}:{version}/{type}"
@@ -227,11 +230,12 @@ def process_recipes():
     numeric_level = getattr(logging, args.loglevel.upper())
     logs_dir = args.logdir
 
-    logging.basicConfig(level=numeric_level, format='%(asctime)s - %(levelname)s - %(message)s', filename=f'{logs_dir}/summary.log', filemode='w')
+    logging.basicConfig(level=numeric_level, format='%(asctime)s - %(levelname)s - bioconda - %(message)s', filename=f'{logs_dir}/summary.log', filemode='w')
 
     # 0.2 Load .env
     load_dotenv()
 
+    logging.info("start_importation")
 
     # 1. connect to DB/ get output file
     STORAGE_MODE = os.getenv('STORAGE_MODE', 'db')
@@ -246,6 +250,7 @@ def process_recipes():
     recipes_path = os.getenv('RECIPES_PATH', './bioconda-recipes/recipes')        
     if not recipes_path:
         logging.info('RECIPES_PATH environment variable not set. Exiting importation.')
+        
     else:
         subdirectories = glob("%s/*/"%(recipes_path))
         tool_names_subs_raw = get_tool_names(subdirectories)
@@ -255,31 +260,21 @@ def process_recipes():
     
         # For each tool, extract metadata and push to DB/file
         logging.info('Processing metadata')
-        log = {'names':[],
-                'n_ok':0,
-                'errors': []
-                }
 
-        n=0
-        landmarks = {str(int((len(tool_names_subs_raw)/10)*i)): f"{i*10}%" for i in range(0,11)} # 10% landmarks for logging
         for tool in tool_names_subs_raw:
-            if str(n) in landmarks.keys():
-                logging.info(f'{n}/{len(tool_names_subs_raw)} ({landmarks[str(n)]}) instances pushed to database\r')
-            n+=1
+
             # 3. Process metadata
-            inst_dicts, log = retrieve_packages_metadata(tool, recipes_path, log)
+            inst_dicts, log = retrieve_packages_metadata(tool, recipes_path)
             for inst_dict in inst_dicts:
                 
                 # 4. Push metadata to DB/file
                 if STORAGE_MODE=='db':
-                    log = push_entry(inst_dict, alambique, log)
+                    push_entry(inst_dict, alambique)
 
                 else:
-                    log = save_entry(inst_dict, OUTPUT_PATH, log)
-                    
-            print_progress(log)
-    
-        print_final_report(log)
+                    save_entry(inst_dict, OUTPUT_PATH)
+
+    logging.info("end_importation")
     
     
 
