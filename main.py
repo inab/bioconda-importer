@@ -224,7 +224,7 @@ def process_recipes():
     parser.add_argument(
         "--logdir", "-d",
         help=("Set the logging directory"),
-        default="./logs",
+        default="./logs/summary.log",
     )
     args = parser.parse_args()
     numeric_level = getattr(logging, args.loglevel.upper())
