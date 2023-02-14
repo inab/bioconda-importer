@@ -230,7 +230,7 @@ def process_recipes():
     numeric_level = getattr(logging, args.loglevel.upper())
     logs_dir = args.logdir
 
-    logging.basicConfig(level=numeric_level, format='%(asctime)s - %(levelname)s - bioconda - %(message)s', filename=f'{logs_dir}/summary.log', filemode='w')
+    logging.basicConfig(level=numeric_level, format='%(asctime)s - %(levelname)s - bioconda - %(message)s', filename=f'{logs_dir}', filemode='w')
 
     # 0.2 Load .env
     load_dotenv()
