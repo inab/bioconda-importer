@@ -18,4 +18,4 @@ RUN mamba install -y -n bioconda-dev -c bioconda -c conda-forge -c anaconda -c f
 SHELL ["conda", "run", "-n", "bioconda-dev", "/bin/bash", "-c"]
 
 # execute main.py
-ENTRYPOINT ["conda", "run", "--no-capture-output", "-n", "bioconda-dev", "python3", "main.py", "-l", "INFO", "-d", "bioconda/logs/summary.log"]
+ENTRYPOINT ["conda", "run", "--no-capture-output", "-n", "bioconda-dev", "python3", "main.py", "-l=INFO", "-d=bioconda/logs/summary.log"]
