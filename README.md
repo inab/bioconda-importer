@@ -31,6 +31,8 @@ If the ENV variables are stored in an `.env` file:
 >
 > Use `host.docker.internal` instead of `localhost` in the container to reach local services. For instance, to connect to a local MongoDB, use the string `host.docker.internal:27017`. 
 
+> :bulb: **Using docker-compose**
+> To overwrite the entrypoint, use `entrypoint`, not `command`.
 
 ### Option 2 - Native 
 
