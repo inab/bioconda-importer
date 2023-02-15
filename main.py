@@ -12,8 +12,6 @@ import bioconda_utils.recipe as brecipe # this module is installed in env 'bioco
 
 from utils import push_entry, save_entry, connect_db
 
-dotenv.load_dotenv()
-
 
 def get_tool_names(subdirectories):
     tool_names_subs_raw = []
@@ -282,7 +280,6 @@ def process_recipes():
 
 if __name__=='__main__':
     # Extract and push metadata
-    print('Extracting metadata from recipes')
     process_recipes()
 
 
