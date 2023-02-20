@@ -31,17 +31,14 @@ If the ENV variables are stored in an `.env` file:
 >
 > Use `host.docker.internal` instead of `localhost` in the container to reach local services. For instance, to connect to a local MongoDB, use the string `host.docker.internal:27017`. 
 
-> :bulb: **Using docker-compose**
-> To overwrite the entrypoint, use `entrypoint`, not `command`.
-
 ### Option 2 - Native 
 
 1. Clone this repository.
 2. Install Mamba. 
-    > conda can be used instead of mamba, but [`bioconda-utils`](https://anaconda.org/bioconda/bioconda-utils) is a very big package and conda can run out of memory when trying to install it. 
+    > ❗️ conda can be used instead of mamba, but [`bioconda-utils`](https://anaconda.org/bioconda/bioconda-utils) is a very big package and conda can run out of memory when trying to install it. 
     
 3. Install Python =< 3.7.
-    > Python 3.7 is not supported by Apple M1 chips.
+    > ❗️ Python 3.7 is not supported by Apple M1 chips.
 
 3. Create the environment and install the dependencies ([`bioconda-utils`](https://anaconda.org/bioconda/bioconda-utils) conda package and Python packages in `requirements.txt`)
 
@@ -68,8 +65,8 @@ If the ENV variables are stored in an `.env` file:
 | Name             | Description | Default | Notes |
 |------------------|-------------|---------|-------|
 | STORAGE_MODE     |  Specifies whether the output will be stored in filesystem (`filesystem`) or pushed to a database (`db`) |  `db` |            |
-| HOST       |  Host of database where output will be pushed |   `localhost`        |  Only used when STORAGE_MODE is `db`      |
-| PORT       |  Port of database where output will be pushed |   `27017`            |  Only used when STORAGE_MODE is `db`      |
+| DBHOST       |  Host of database where output will be pushed |   `localhost`        |  Only used when STORAGE_MODE is `db`      |
+| DBPORT       |  Port of database where output will be pushed |   `27017`            |  Only used when STORAGE_MODE is `db`      |
 | DB         |  Name of database where output will be pushed |   `observatory`      |  Only used when STORAGE_MODE is `db`      |
 | ALAMBIQUE |  Name of database where output will be pushed  |   `alambique`        |  Only used when STORAGE_MODE is `db`      |
 | OUTPUT_PATH      |  Path to output file                    | `./data/bioconda.json` |  Only used when STORAGE_MODE is `filesystem` | 
