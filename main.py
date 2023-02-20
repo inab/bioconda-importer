@@ -245,7 +245,7 @@ def process_recipes():
     # 0.2 Load .env
     load_dotenv()
 
-    logger.info("start_importation")
+    logger.info("state_importation - 1")
 
     # 1. connect to DB/ get output file
     STORAGE_MODE = os.getenv('STORAGE_MODE', 'db')
@@ -285,7 +285,7 @@ def process_recipes():
                 else:
                     save_entry(inst_dict, OUTPUT_PATH)
 
-    logger.info("end_importation")
+    logger.info("state_importation - 0")
     
     
 
