@@ -5,8 +5,7 @@ from bs4 import BeautifulSoup
 
 
 
-def push_entry(tool:dict, collection:'pymongo.collection.Collection', logs_dir:str, numeric_level:int):
-    logging.basicConfig(level=numeric_level, format='%(asctime)s - %(levelname)s - bioconda - %(message)s', filename=logs_dir, filemode='w', force=True)
+def push_entry(tool:dict, collection:'pymongo.collection.Collection', logger):
 
     '''Push tool to collection.
 
@@ -21,10 +20,10 @@ def push_entry(tool:dict, collection:'pymongo.collection.Collection', logs_dir:s
     try:
         updateResult = collection.update_many({'@id':tool['@id']}, { '$set': tool }, upsert=True)
     except Exception as e:
-        logging.warning(f"error with {tool['name']} - pushing_to_db")
-        logging.warning(e)
+        logger.warning(f"error with {tool['name']} - pushing_to_db")
+        logger.warning(e)
     else:
-        logging.info(f"pushed_to_db_ok - {tool['name']}")
+        logger.info(f"pushed_to_db_ok - {tool['name']}")
     finally:
         return
 

@@ -280,7 +280,7 @@ def process_recipes():
                 
                 # 4. Push metadata to DB/file
                 if STORAGE_MODE=='db':
-                    push_entry(inst_dict, alambique, numeric_level, logs_dir)
+                    push_entry(inst_dict, alambique,logger)
 
                 else:
                     save_entry(inst_dict, OUTPUT_PATH)
