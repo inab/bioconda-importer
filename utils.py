@@ -6,6 +6,8 @@ from bs4 import BeautifulSoup
 
 
 def push_entry(tool:dict, collection:'pymongo.collection.Collection'):
+    logging.basicConfig(format='%(asctime)s - %(levelname)s - bioconda - %(message)s')
+
     '''Push tool to collection.
 
     tool: dictionary. Must have at least an '@id' key.

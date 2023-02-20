@@ -7,8 +7,8 @@ import argparse
 from dotenv import load_dotenv
 from glob import glob
 
-import ruamel.yaml
-import bioconda_utils.recipe as brecipe # this module is installed in env 'bioconda'
+#import ruamel.yaml
+#import bioconda_utils.recipe as brecipe # this module is installed in env 'bioconda'
 
 from utils import push_entry, save_entry, connect_db
 
