@@ -7,8 +7,8 @@ import argparse
 from dotenv import load_dotenv
 from glob import glob
 
-import ruamel.yaml
-import bioconda_utils.recipe as brecipe # this module is installed in env 'bioconda'
+#import ruamel.yaml
+#import bioconda_utils.recipe as brecipe # this module is installed in env 'bioconda'
 
 from utils import push_entry, save_entry, connect_db
 
@@ -227,8 +227,7 @@ def process_recipes():
     args = parser.parse_args()
     numeric_level = getattr(logging, args.loglevel.upper())
     logs_dir = args.logdir
-
-    logging.basicConfig(level=numeric_level, format='%(asctime)s - %(levelname)s - bioconda - %(message)s', filename=f'{logs_dir}', filemode='w')
+    logging.basicConfig(level=numeric_level, format='%(asctime)s - %(levelname)s - bioconda - %(message)s', filename=logs_dir, filemode='w')
 
     # 0.2 Load .env
     load_dotenv()
