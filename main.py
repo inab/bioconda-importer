@@ -1,6 +1,4 @@
 import os
-import dotenv
-import time 
 import logging
 import argparse
 
@@ -8,7 +6,7 @@ from dotenv import load_dotenv
 from glob import glob
 
 import ruamel.yaml
-import bioconda_utils.recipe as brecipe # this module is installed in env 'bioconda'
+import bioconda_utils.recipe as brecipe 
 
 from utils import push_entry, save_entry, connect_db
 
@@ -30,18 +28,19 @@ def retrieve_packages_metadata(tool, recipes_path):
                 inst_dict['@data_source'] = 'bioconda_recipes'
           
     else:
-        logging.warning(f"Error with {tool} - parsing")
-        logging.warning('Empty inst_dict')
+        logger.warning(f"Error with {tool} - parsing")
+        logger.warning('Empty inst_dict')
 
     return(inst_dicts)
 
 def extract_metadata(package, recipes_path):
+    logger = logging.getLogger(__name__)
     insts = []
     try:
         recipe = brecipe.load_parallel_iter(recipes_path, package)
     except Exception as e:
-        logging.warning(f"error with {package} - parsing")
-        logging.warning(e)
+        logger.warning(f"error with {package} - parsing")
+        logger.warning(e)
         return(insts)
     else:
         for a in recipe:
@@ -210,7 +209,7 @@ def check_tool_host_target(tool_requirements, type_):
 
 
 def process_recipes():
-    # 0.1 Set up logging
+    # 0.1 Set up logger
     parser = argparse.ArgumentParser(
         description="Importer of Bioconda recipes"
     )
@@ -230,7 +229,7 @@ def process_recipes():
 
     logger = logging.getLogger(__name__)
     # write to stderr
-    handler = logging.StreamHandler()
+    handler = logging.FileHandler(logs_dir, mode='w')
     handler.setLevel(numeric_level)
     logger.setLevel(numeric_level)
 
@@ -239,13 +238,14 @@ def process_recipes():
     handler.setFormatter(formatter)
 
     logger.addHandler(handler)
+    logger.propagate = False
 
     #logging.basicConfig(level=numeric_level, format='', filename=logs_dir, filemode='w', force=True)
 
     # 0.2 Load .env
     load_dotenv()
 
-    logging.info("start_importation")
+    logger.info("start_importation")
 
     # 1. connect to DB/ get output file
     STORAGE_MODE = os.getenv('STORAGE_MODE', 'db')
@@ -259,18 +259,18 @@ def process_recipes():
     # 2. List tool names in the directory
     recipes_path = os.getenv('RECIPES_PATH', './bioconda-recipes/recipes')        
     if not recipes_path:
-        logging.info('RECIPES_PATH environment variable not set. Exiting importation.')
+        logger.info('RECIPES_PATH environment variable not set. Exiting importation.')
         
     else:
         subdirectories = glob("%s/*/"%(recipes_path))
-        logging.debug(f'subdirectories: {subdirectories}')
+        logger.debug(f'subdirectories: {subdirectories}')
         tool_names_subs_raw = get_tool_names(subdirectories)
         
-        logging.info('List of names obtained')
-        logging.info('Number of tools: %s'%(len(tool_names_subs_raw)))
+        logger.info('List of names obtained')
+        logger.info('Number of tools: %s'%(len(tool_names_subs_raw)))
     
         # For each tool, extract metadata and push to DB/file
-        logging.info('Processing metadata')
+        logger.info('Processing metadata')
 
         for tool in tool_names_subs_raw:
 
@@ -285,7 +285,7 @@ def process_recipes():
                 else:
                     save_entry(inst_dict, OUTPUT_PATH)
 
-    logging.info("end_importation")
+    logger.info("end_importation")
     
     
 
