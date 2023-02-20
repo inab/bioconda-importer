@@ -6,7 +6,7 @@ from bs4 import BeautifulSoup
 
 
 def push_entry(tool:dict, collection:'pymongo.collection.Collection', logs_dir:str, numeric_level:int):
-    logging.basicConfig(level=numeric_level, format='%(asctime)s - %(levelname)s - bioconda - %(message)s', filename=logs_dir, filemode='w')
+    logging.basicConfig(level=numeric_level, format='%(asctime)s - %(levelname)s - bioconda - %(message)s', filename=logs_dir, filemode='w', force=True)
 
     '''Push tool to collection.
 

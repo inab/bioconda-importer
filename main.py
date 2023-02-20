@@ -227,7 +227,7 @@ def process_recipes():
     args = parser.parse_args()
     numeric_level = getattr(logging, args.loglevel.upper())
     logs_dir = args.logdir
-    logging.basicConfig(level=numeric_level, format='%(asctime)s - %(levelname)s - bioconda - %(message)s', filename=logs_dir, filemode='w')
+    logging.basicConfig(level=numeric_level, format='%(asctime)s - %(levelname)s - bioconda - %(message)s', filename=logs_dir, filemode='w', force=True)
 
     # 0.2 Load .env
     load_dotenv()
