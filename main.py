@@ -209,83 +209,91 @@ def check_tool_host_target(tool_requirements, type_):
 
 
 def process_recipes():
-    # 0.1 Set up logger
-    parser = argparse.ArgumentParser(
-        description="Importer of Bioconda recipes"
-    )
-    parser.add_argument(
-        "--loglevel", "-l",
-        help=("Set the logging level"),
-        default="INFO",
-    )
-    parser.add_argument(
-        "--logdir", "-d",
-        help=("Set the logging directory"),
-        default="./logs/summary.log",
-    )
-    args = parser.parse_args()
-    numeric_level = getattr(logging, args.loglevel.upper())
-    logs_dir = args.logdir 
+    try:
+        # 0.1 Set up logger
+        parser = argparse.ArgumentParser(
+            description="Importer of Bioconda recipes"
+        )
+        parser.add_argument(
+            "--loglevel", "-l",
+            help=("Set the logging level"),
+            default="INFO",
+        )
+        parser.add_argument(
+            "--logdir", "-d",
+            help=("Set the logging directory"),
+            default="./logs/summary.log",
+        )
+        args = parser.parse_args()
+        numeric_level = getattr(logging, args.loglevel.upper())
+        logs_dir = args.logdir 
 
-    logger = logging.getLogger(__name__)
-    # write to stderr
-    handler = logging.FileHandler(logs_dir, mode='w')
-    handler.setLevel(numeric_level)
-    logger.setLevel(numeric_level)
+        logger = logging.getLogger(__name__)
+        # write to stderr
+        handler = logging.FileHandler(logs_dir, mode='w')
+        handler.setLevel(numeric_level)
+        logger.setLevel(numeric_level)
 
-    # format log message
-    formatter = logging.Formatter("%(asctime)s - %(levelname)s - bioconda - %(message)s")
-    handler.setFormatter(formatter)
+        # format log message
+        formatter = logging.Formatter("%(asctime)s - %(levelname)s - bioconda - %(message)s")
+        handler.setFormatter(formatter)
 
-    logger.addHandler(handler)
-    logger.propagate = False
+        logger.addHandler(handler)
+        logger.propagate = False
 
-    #logging.basicConfig(level=numeric_level, format='', filename=logs_dir, filemode='w', force=True)
+        #logging.basicConfig(level=numeric_level, format='', filename=logs_dir, filemode='w', force=True)
 
-    # 0.2 Load .env
-    load_dotenv()
+        # 0.2 Load .env
+        load_dotenv()
 
-    logger.info("state_importation - 1")
+        logger.info("state_importation - 1")
 
-    # 1. connect to DB/ get output file
-    STORAGE_MODE = os.getenv('STORAGE_MODE', 'db')
+        # 1. connect to DB/ get output file
+        STORAGE_MODE = os.getenv('STORAGE_MODE', 'db')
 
-    if STORAGE_MODE =='db':
-        alambique = connect_db()
+        if STORAGE_MODE =='db':
+            alambique = connect_db()
+            
+        else:
+            OUTPUT_PATH = os.getenv('OUTPUT_PATH', './data/bioconda.json')
+
+        # 2. List tool names in the directory
+        recipes_path = os.getenv('RECIPES_PATH', './bioconda-recipes/recipes')        
+        if not recipes_path:
+            logger.info('RECIPES_PATH environment variable not set. Exiting importation.')
+            
+        else:
+            subdirectories = glob("%s/*/"%(recipes_path))
+            logger.debug(f'subdirectories: {subdirectories}')
+            tool_names_subs_raw = get_tool_names(subdirectories)
+            
+            logger.info('List of names obtained')
+            logger.info('Number of tools: %s'%(len(tool_names_subs_raw)))
         
-    else:
-        OUTPUT_PATH = os.getenv('OUTPUT_PATH', './data/bioconda.json')
+            # For each tool, extract metadata and push to DB/file
+            logger.info('Processing metadata')
 
-    # 2. List tool names in the directory
-    recipes_path = os.getenv('RECIPES_PATH', './bioconda-recipes/recipes')        
-    if not recipes_path:
-        logger.info('RECIPES_PATH environment variable not set. Exiting importation.')
-        
-    else:
-        subdirectories = glob("%s/*/"%(recipes_path))
-        logger.debug(f'subdirectories: {subdirectories}')
-        tool_names_subs_raw = get_tool_names(subdirectories)
-        
-        logger.info('List of names obtained')
-        logger.info('Number of tools: %s'%(len(tool_names_subs_raw)))
+            for tool in tool_names_subs_raw:
+
+                # 3. Process metadata
+                inst_dicts = retrieve_packages_metadata(tool, recipes_path)
+                for inst_dict in inst_dicts:
+                    
+                    # 4. Push metadata to DB/file
+                    if STORAGE_MODE=='db':
+                        push_entry(inst_dict, alambique,logger)
+
+                    else:
+                        save_entry(inst_dict, OUTPUT_PATH)
+
+    except Exception as e:
+        logging.error(f"Error: {e}")
+        logging.info("state_importation - 2")
+        exit(1)
     
-        # For each tool, extract metadata and push to DB/file
-        logger.info('Processing metadata')
-
-        for tool in tool_names_subs_raw:
-
-            # 3. Process metadata
-            inst_dicts = retrieve_packages_metadata(tool, recipes_path)
-            for inst_dict in inst_dicts:
-                
-                # 4. Push metadata to DB/file
-                if STORAGE_MODE=='db':
-                    push_entry(inst_dict, alambique,logger)
-
-                else:
-                    save_entry(inst_dict, OUTPUT_PATH)
-
-    logger.info("state_importation - 0")
+    else: 
+        logging.info("state_importation - 0")
+        exit(0)
     
     
 
