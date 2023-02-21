@@ -287,7 +287,7 @@ def process_recipes():
                         save_entry(inst_dict, OUTPUT_PATH)
 
     except Exception as e:
-        logging.error(f"Error: {e}")
+        logging.error(f"Error: {type(e).__name__}")
         logging.info("state_importation - 2")
         exit(1)
     
@@ -295,8 +295,6 @@ def process_recipes():
         logging.info("state_importation - 0")
         exit(0)
     
-    
-
 
 if __name__=='__main__':
     # Extract and push metadata
