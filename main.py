@@ -287,12 +287,12 @@ def process_recipes():
                         save_entry(inst_dict, OUTPUT_PATH)
 
     except Exception as e:
-        logging.error(f"Error: {type(e).__name__}")
-        logging.info("state_importation - 2")
+        logger.error(f"Error: {type(e).__name__}")
+        logger.info("state_importation - 2")
         exit(1)
     
     else: 
-        logging.info("state_importation - 0")
+        logger.info("state_importation - 0")
         exit(0)
     
 
