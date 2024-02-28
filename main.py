@@ -30,7 +30,7 @@ def retrieve_packages_metadata(tool, recipes_path):
                     inst_dict['version'] = inst_dict['package'].get('version')
 
             #type
-            types = list(get_type(tool))
+            types = list(get_type(inst_dict))
             for type_ in types:
                 inst_dict['@type'] = type_
 
