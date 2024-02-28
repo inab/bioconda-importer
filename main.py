@@ -245,13 +245,8 @@ def process_recipes():
         logger.info("state_importation - 1")
 
         # 1. connect to DB/ get output file
-        STORAGE_MODE = os.getenv('STORAGE_MODE', 'db')
 
-        if STORAGE_MODE =='db':
-            alambique = connect_db()
-            
-        else:
-            OUTPUT_PATH = os.getenv('OUTPUT_PATH', './data/bioconda.json')
+        alambique = connect_db()
 
         # 2. List tool names in the directory
         recipes_path = os.getenv('RECIPES_PATH', './bioconda-recipes/recipes')        
@@ -276,11 +271,7 @@ def process_recipes():
                 for inst_dict in inst_dicts:
                     
                     # 4. Push metadata to DB/file
-                    if STORAGE_MODE=='db':
-                        push_entry(inst_dict, alambique,logger)
-
-                    else:
-                        save_entry(inst_dict, OUTPUT_PATH)
+                    push_entry(inst_dict, alambique,logger)
 
     except Exception as e:
         logger.error(f"Error: {type(e).__name__}")
