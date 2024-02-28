@@ -9,7 +9,7 @@ from glob import glob
 import ruamel.yaml
 import bioconda_utils.recipe as brecipe 
 
-from utils import push_entry, save_entry, connect_db
+from utils import push_entry, connect_db_local, add_metadata_to_entry
 
 
 def get_tool_names(subdirectories):
@@ -24,9 +24,17 @@ def retrieve_packages_metadata(tool, recipes_path):
     
     if inst_dicts:
         for inst_dict in inst_dicts:
-            if inst_dict:
-                inst_dict['@id'] = build_id(inst_dict)  
-                inst_dict['@data_source'] = 'bioconda_recipes'
+            
+            # version
+            if inst_dict.get('package'):
+                if inst_dict['package'].get('name')==inst_dict.get('name'):
+                    inst_dict['version'] = inst_dict['package'].get('version')
+
+            #type
+            types = list(get_type(tool))
+            for type_ in types:
+                inst_dict['@type'] = type_
+
           
     else:
         logger.warning(f"Error with {tool} - parsing")
@@ -54,18 +62,6 @@ def extract_metadata(package, recipes_path):
             insts.append(a.meta)
         
         return(insts)
-
-
-def build_id(tool):
-    id_template = "https://openebench.bsc.es/monitor/tool/bioconda_recipes:{name}:{version}/{type}"
-    
-    name = tool['package']['name']
-    type_= list(get_type(tool))
-    tool['type'] = type_
-
-    id_ = id_template.format(name=name, version=None, type=type_)
-
-    return(id_)
 
 def get_type(tool):
     '''
@@ -208,7 +204,6 @@ def check_tool_host_target(tool_requirements, type_):
 
     return(type_)
 
-
 def process_recipes():
     try:
         # 0.1 Set up logger
@@ -237,8 +232,6 @@ def process_recipes():
         logger.addHandler(handler)
         logger.propagate = False
 
-        #logging.basicConfig(level=numeric_level, format='', filename=logs_dir, filemode='w', force=True)
-
         # 0.2 Load .env
         load_dotenv()
 
@@ -246,7 +239,7 @@ def process_recipes():
 
         # 1. connect to DB/ get output file
 
-        alambique = connect_db()
+        alambique = connect_db_local()
 
         # 2. List tool names in the directory
         recipes_path = os.getenv('RECIPES_PATH', './bioconda-recipes/recipes')        
@@ -268,12 +261,23 @@ def process_recipes():
 
                 # 3. Process metadata
                 inst_dicts = retrieve_packages_metadata(tool, recipes_path)
-                for inst_dict in inst_dicts:
+
+                for entry in inst_dicts:
+    
+                    identifier = f"bioconda_recipes/{entry.get('name')}/{entry.get('@type')}/{entry.get('version')}"
+                    entry = {
+                        "data": entry
+                    }
                     
-                    # 4. Push metadata to DB/file
-                    push_entry(inst_dict, alambique,logger)
+                    entry['_id'] = identifier
+                    entry['@data_source'] = 'bioconda_recipes'
+
+                    document_w_metadata = add_metadata_to_entry(identifier, entry, alambique)
+                    push_entry(document_w_metadata, alambique)
+    
 
     except Exception as e:
+        logging.exception("Exception occurred")
         logger.error(f"Error: {type(e).__name__}")
         logger.info("state_importation - 2")
         exit(1)
