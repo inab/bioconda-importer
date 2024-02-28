@@ -1,7 +1,22 @@
 image: registry.gitlab.bsc.es/inb/elixir/software-observatory/biconda-importer:latest
 stages:
   - test
+  - prepare
   - main_task  
+
+update_repo_and_run_script:
+  stage: prepare
+  script:
+    # Check if the directory exists and is a git repo
+    - if [ -d "my_repo_dir/.git" ]; then
+        echo "Repository directory exists. Pulling latest changes...";
+        cd my_repo_dir && git pull;
+      else
+        echo "Repository directory does not exist. Cloning...";
+        # Clone the repo if it does not exist
+        git clone https://your_repo_url.git my_repo_dir;
+      fi
+    - cd ../
 
 tests: 
   stage: test
