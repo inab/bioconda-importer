@@ -7,7 +7,7 @@ tests:
   stage: test
   script: 
     - conda run -n bioconda-dev python -c "import sys; print(sys.version)"
-    - conda run --no-capture-output -n bioconda-dev python3 -m unittest discover "$CI_PROJECT_DIR/test/"
+    - conda run --no-capture-output -n bioconda-dev python3 -m unittest discover -v "$CI_PROJECT_DIR/test/"
   artifacts:
     when: always
     reports:
