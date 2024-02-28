@@ -235,7 +235,7 @@ def process_recipes():
 
         # 1. connect to DB/ get output file
 
-        alambique = connect_db()
+        alambique = connect_db('alambique')
 
         # 2. List tool names in the directory
         recipes_path = os.getenv('RECIPES_PATH', './bioconda-recipes/recipes')        
