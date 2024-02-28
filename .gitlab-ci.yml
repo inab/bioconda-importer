@@ -6,7 +6,7 @@ stages:
 tests: 
   stage: test
   script: 
-    - conda run -n bioconda-dev /bin/bash -c
+    - conda run -n bioconda-dev /bin/bash -c "import sys; print(sys.version)"
     - python3 -m unittest discover "$CI_PROJECT_DIR/test/"
   artifacts:
     when: always
@@ -20,7 +20,7 @@ run_metadata_import:
   script:
     - pip install --cache-dir .pip_cache/ -r requirements.txt
     - echo "⚙️ Running main task"
-    - conda run -n bioconda-dev /bin/bash -c
+    - conda run -n bioconda-dev /bin/bash -c "import sys; print(sys.version)"
     - conda run --no-capture-output -n bioconda-dev python3 main.py -l=DEBUG
     - |
       echo -e "\n\
