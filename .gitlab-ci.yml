@@ -1,5 +1,4 @@
-image: registry.gitlab.bsc.es/inb/elixir/software-observatory/bioconda-importer:latest
-
+image: registry.gitlab.bsc.es/inb/elixir/software-observatory/biconda-importer:latest
 stages:
   - test
   - main_task  
