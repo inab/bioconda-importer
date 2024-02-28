@@ -16,8 +16,7 @@ update_repo_and_run_script:
         # Clone the repo if it does not exist
         git clone https://your_repo_url.git my_repo_dir;
       fi
-
-  - cd ../
+    - cd ../
 
 tests: 
   stage: test
