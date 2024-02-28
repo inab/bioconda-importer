@@ -1,7 +1,7 @@
 image: registry.gitlab.bsc.es/inb/elixir/software-observatory/biconda-importer:latest
 stages:
-  - test
   - prepare
+  - test
   - main_task  
 
 update_repo_and_run_script:
