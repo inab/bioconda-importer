@@ -8,15 +8,15 @@ update_repo_and_run_script:
   stage: prepare
   script:
     # Check if the directory exists and is a git repo
-    - if [ -d "my_repo_dir/.git" ]; then
+    - | 
+      if [ -d "bioconda-recipes/.git" ]; then
         echo "Repository directory exists. Pulling latest changes...";
-        cd my_repo_dir && git pull;
+        cd bioconda-recipes && git pull && cd ..
       else
         echo "Repository directory does not exist. Cloning...";
         # Clone the repo if it does not exist
-        git clone https://your_repo_url.git my_repo_dir;
+        git clone https://github.com/bioconda/bioconda-recipes;
       fi
-    - cd ../
 
 tests: 
   stage: test
