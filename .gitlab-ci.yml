@@ -8,8 +8,7 @@ variables:
   DOCKER_TLS_CERTDIR: ""
 
 before_script:
-  - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN registry.gitlab.bsc.es
-
+  -  echo $CI_REGISTRY_PASSWORD | docker login -u $CI_REGISTRY_USER --password-stdin registry.gitlab.bsc.es
 stages:
   - test
   - main_task  
