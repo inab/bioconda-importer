@@ -3,7 +3,6 @@ import logging
 import argparse
 import sys
 
-from dotenv import load_dotenv
 from glob import glob
 
 import ruamel.yaml
@@ -268,7 +267,7 @@ def process_recipes():
                     entry = {
                         "data": entry
                     }
-                    
+
                     entry['_id'] = identifier
                     entry['@data_source'] = 'bioconda_recipes'
 
