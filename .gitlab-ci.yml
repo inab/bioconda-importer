@@ -4,7 +4,7 @@ stages:
   - test
   - main_task  
 
-update_repo_and_run_script:
+update_repo:
   stage: prepare
   script:
     # Check if the directory exists and is a git repo
