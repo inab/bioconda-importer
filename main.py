@@ -8,7 +8,7 @@ from glob import glob
 import ruamel.yaml
 import bioconda_utils.recipe as brecipe 
 
-from utils import push_entry, connect_db_local, add_metadata_to_entry
+from utils import push_entry, connect_db, add_metadata_to_entry
 
 
 def get_tool_names(subdirectories):
@@ -231,14 +231,11 @@ def process_recipes():
         logger.addHandler(handler)
         logger.propagate = False
 
-        # 0.2 Load .env
-        load_dotenv()
-
         logger.info("state_importation - 1")
 
         # 1. connect to DB/ get output file
 
-        alambique = connect_db_local()
+        alambique = connect_db()
 
         # 2. List tool names in the directory
         recipes_path = os.getenv('RECIPES_PATH', './bioconda-recipes/recipes')        
