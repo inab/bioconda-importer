@@ -6,6 +6,7 @@ stages:
 tests: 
   stage: test
   script: 
+    - conda run -n bioconda-dev /bin/bash -c
     - python3 -m unittest discover "$CI_PROJECT_DIR/test/"
   artifacts:
     when: always
