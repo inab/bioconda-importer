@@ -1,6 +1,7 @@
 import os
 import logging
 import argparse
+import sys
 
 from dotenv import load_dotenv
 from glob import glob
@@ -219,18 +220,13 @@ def process_recipes():
             help=("Set the logging level"),
             default="INFO",
         )
-        parser.add_argument(
-            "--logdir", "-d",
-            help=("Set the logging directory"),
-            default="./logs/summary.log",
-        )
+
         args = parser.parse_args()
         numeric_level = getattr(logging, args.loglevel.upper())
-        logs_dir = args.logdir 
 
         logger = logging.getLogger(__name__)
-        # write to stderr
-        handler = logging.FileHandler(logs_dir, mode='w')
+        # write to stdout instead of a file
+        handler = logging.StreamHandler(sys.stdout)
         handler.setLevel(numeric_level)
         logger.setLevel(numeric_level)
 
