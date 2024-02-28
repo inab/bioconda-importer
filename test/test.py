@@ -4,7 +4,6 @@ from main import get_tool_names, get_type
 
 import json
 
-
 class TestRecipesRetrieval(unittest.TestCase):
 
     def test_get_recipes(self):
