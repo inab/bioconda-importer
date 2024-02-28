@@ -6,10 +6,8 @@ stages:
 tests: 
   stage: test
   script: 
-    - mamba install -y -n bioconda-dev -c bioconda -c conda-forge -c anaconda -c free bioconda-utils
-    - mamba install -y -n bioconda-dev -c bioconda -c conda-forge -c anaconda -c free --file requirements.txt
     - conda run -n bioconda-dev python -c "import sys; print(sys.version)"
-    - python3 -m unittest discover "$CI_PROJECT_DIR/test/"
+    - conda run --no-capture-output -n bioconda-dev python3 python3 -m unittest discover "$CI_PROJECT_DIR/test/"
   artifacts:
     when: always
     reports:
