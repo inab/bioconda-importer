@@ -36,8 +36,7 @@ run_metadata_import:
     - conda run --no-capture-output -n bioconda-dev python3 main.py -l=DEBUG
     - |
       echo -e "\n\
-      ✨ Execution finished\n\
-      \n\"
+      ✨ Execution finished"
   artifacts:
     expire_in: 4 weeks
   rules:
