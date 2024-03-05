@@ -53,10 +53,9 @@ If the ENV variables are stored in an `.env` file:
 5. Execute the importer
 
     ```sh
-    python3 main.py -l=info -d=./bioconda
+    python3 main.py -l=info 
     ``` 
 - `-l` or `--loglevel` specifies the log level.
-- `-d` or `--logdir` specifies the path to the directory where the logs will be stored.
 
 ## Configuration
 
