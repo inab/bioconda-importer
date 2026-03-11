@@ -1,0 +1,32 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+title: "Biconda Importer"
+abstract: >
+  Importer module for retrieving and harmonizing software metadata from
+  the Bioconda repository.
+authors:
+  - family-names: "Martín del Pico"
+    given-names: "Eva"
+    affiliation: "Barcelona Supercomputing Center (BSC), INB"
+repository-code: "https://gitlab.bsc.es/inb/elixir/software-observatory/biconda-importer"
+url: "https://gitlab.bsc.es/inb/elixir/software-observatory/biconda-importer"
+keywords:
+  - Software Observatory
+  - OpenEBench
+  - Bioconda
+  - importer
+  - metadata
+license: "MIT"
+version: "0.1.0"
+date-released: "2025-10-08"
+preferred-citation:
+  type: software
+  title: "BiConda Importer"
+  version: "0.1.0"
+  authors:
+    - family-names: "Martín del Pico"
+      given-names: "Eva"
+  institution: "Barcelona Supercomputing Center (BSC) – INB"
+  license: "MIT"
+  repository-code: "https://gitlab.bsc.es/inb/elixir/software-observatory/biconda-importer"
+  notes: "Part of the ELIXIR Software Observatory toolchain."
