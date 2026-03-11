@@ -75,13 +75,3 @@ If the ENV variables are stored in an `.env` file:
 | ALAMBIQUE |  Name of database where output will be pushed  |   `alambique`        |  |
 | RECIPES_PATH | Path to bioconda recipes (from [repository](https://github.com/bioconda/bioconda-recipes/recipes)) | `./bioconda-recipes/recipes` | Only required when running natively AND if the location of bioconda recipes changes|
 
-## CI/CD
-
-This repository is integrated with GitLab CI/CD. The pipeline is defined in `.gitlab-ci.yml`. It is composed of the following stages:
-
-| Stage | Description | Runs |
-|-------|-------------|------|
-| `prepare` | Pulls bioconda recipes. It is necessary for both testing and data importation | Always |
-| `test` | Runs the tests | Always |
-| `main_task` | Data importation | Manually or on schedule |
-

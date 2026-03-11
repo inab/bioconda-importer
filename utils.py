@@ -160,15 +160,15 @@ def connect_db(collection_name: str):
 
     '''
     # variables come from .env file
-    mongoHost = os.getenv('HOST', default='localhost')
-    mongoPort = os.getenv('PORT', default='27017')
-    mongoUser = os.getenv('USER')
-    mongoPass = os.getenv('PASS')
-    mongoAuthSrc = os.getenv('AUTH_SRC', default='admin')
-    mongoDb = os.getenv('DB', default='oeb-research-software')
+    mongoHost = os.getenv('MONGO_HOST', default='localhost')
+    mongoPort = os.getenv('MONGO_PORT', default='27017')
+    mongoUser = os.getenv('MONGO_USER')
+    mongoPass = os.getenv('MONGO_PASS')
+    mongoAuthSrc = os.getenv('MONGO_AUTH_SRC', default='admin')
+    mongoDb = os.getenv('MONGO_DB', default='oeb-research-software')
 
     if collection_name == 'alambique':
-        collection_name = os.getenv('ALAMBIQUE', default='alambique')
+        collection_name = os.getenv('ALAMBIQUE', default='alambiqueDev')
     
     print(f"Connecting to {collection_name} collection.")
 
@@ -188,7 +188,6 @@ def connect_db(collection_name: str):
 
 def connect_db_local(collection_name: str):
     '''Connect to MongoDB and return the database and collection objects.
-
     '''
     # Connect to MongoDB
     mongoClient = MongoClient('localhost', 27017)
