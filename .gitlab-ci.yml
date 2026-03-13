@@ -1,4 +1,4 @@
-image: docker:24.0.5-cli
+image: docker:latest
 
 stages:
   - publish
@@ -6,7 +6,7 @@ stages:
 build_and_push:
   stage: publish
   services:
-    - name: docker:24.0.5-dind
+    - name: docker:dind
       alias: docker
   variables:
     DOCKER_TLS_CERTDIR: ""
