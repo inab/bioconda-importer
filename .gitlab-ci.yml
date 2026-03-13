@@ -17,5 +17,4 @@ build_and_push:
     - docker build --pull -t "$CI_REGISTRY_IMAGE" .
     - docker push "$CI_REGISTRY_IMAGE"
   rules:
-      when: on_success
-      when: manual
+    - when: manual
