@@ -1,7 +1,7 @@
 image: docker:latest
 
 stages:
-  - publish
+  - publish 
 
 build_and_push:
   stage: publish
@@ -10,8 +10,9 @@ build_and_push:
   variables:
     DOCKER_TLS_CERTDIR: "/certs"
     IMAGE_TAG: "$CI_COMMIT_TAG"
+  before_script:
+    - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
   script:
-    - echo "$CI_REGISTRY_PASSWORD" | docker login "$CI_REGISTRY" -u "$CI_REGISTRY_USER" --password-stdin
     - |
       if [ -z "$IMAGE_TAG" ]; then
         IMAGE_TAG="$CI_COMMIT_SHORT_SHA"
