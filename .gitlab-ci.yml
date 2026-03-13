@@ -9,7 +9,6 @@ build_and_push:
     - name: docker:24.0.5-dind
       alias: docker
   variables:
-    DOCKER_HOST: tcp://docker:2375
     DOCKER_TLS_CERTDIR: ""
     IMAGE_TAG: "$CI_COMMIT_TAG"
   before_script:
